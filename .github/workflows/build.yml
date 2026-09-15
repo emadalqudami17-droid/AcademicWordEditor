@@ -13,10 +13,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set up Python
+      - name: Set up Python 3.11
         uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
+          python-version: '3.11.9'
 
       - name: Install system dependencies
         run: |
@@ -25,12 +25,19 @@ jobs:
             git zip unzip openjdk-17-jdk \
             autoconf automake libtool pkg-config m4 \
             zlib1g-dev libncurses5-dev libncursesw5-dev \
-            libtinfo6 cmake libffi-dev libssl-dev
+            libtinfo6 cmake libffi-dev libssl-dev \
+            ccache
 
-      - name: Install buildozer
+      - name: Verify Python version
+        run: |
+          python --version
+          which python
+
+      - name: Install buildozer & p4a
         run: |
           pip install --upgrade pip
           pip install "cython<3.0" buildozer
+          pip install "python-for-android==2024.1.21"
 
       - name: Cache buildozer
         uses: actions/cache@v4
@@ -38,11 +45,15 @@ jobs:
           path: |
             ~/.buildozer
             .buildozer
+            ~/.cache/pip
           key: buildozer-${{ hashFiles('buildozer.spec') }}
           restore-keys: |
             buildozer-
 
       - name: Build with Buildozer
+        env:
+          # إجبار استخدام Python 3.11
+          PYTHON: /opt/hostedtoolcache/Python/3.11.9/x64/bin/python3
         run: |
           yes | buildozer -v android debug
 
