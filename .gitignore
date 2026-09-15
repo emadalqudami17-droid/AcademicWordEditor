@@ -1,0 +1,25 @@
+# Buildozer
+.buildozer/
+bin/
+*.pyc
+__pycache__/
+
+# Python
+*.egg-info/
+.venv/
+venv/
+env/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# System
+.DS_Store
+Thumbs.db
+
+# Data
+data/documents/*.json
+data/backups/*
+!data/backups/.gitkeep
