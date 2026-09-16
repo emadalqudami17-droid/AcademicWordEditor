@@ -9,7 +9,7 @@ source.include_patterns = assets/*,data/*,screens/*,widgets/*,document/*,utils/*
 
 version = 0.1.0
 requirements = hostpython3==3.11.5,python3==3.11.5,kivy==2.3.0,kivymd==1.2.0,pyjnius,android
-# الأيقونة
+
 icon.filename = %(source.dir)s/assets/icon.png
 
 orientation = portrait
@@ -19,6 +19,7 @@ android.permissions = READ_EXTERNAL_STORAGE,WRITE_EXTERNAL_STORAGE
 android.api = 33
 android.minapi = 24
 android.archs = arm64-v8a, armeabi-v7a
+android.ndk = 25b
 
 android.allow_backup = True
 android.presplash_color = #37474F
