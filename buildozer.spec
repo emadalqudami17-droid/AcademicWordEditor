@@ -8,7 +8,7 @@ source.include_exts = py,png,jpg,jpeg,kv,atlas,json,ttf,otf,txt,md
 source.include_patterns = assets/*,data/*,screens/*,widgets/*,document/*,utils/*
 
 version = 0.1.0
-requirements = python3==3.11.5,kivy==2.3.0,kivymd==1.2.0,pyjnius,android
+requirements = hostpython3==3.11.5,python3==3.11.5,kivy==2.3.0,kivymd==1.2.0,pyjnius,android
 # الأيقونة
 icon.filename = %(source.dir)s/assets/icon.png
 
