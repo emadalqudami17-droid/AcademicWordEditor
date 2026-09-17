@@ -28,16 +28,12 @@ jobs:
             libtinfo6 cmake libffi-dev libssl-dev \
             ccache
 
-      - name: Verify Python version
-        run: |
-          python --version
-          which python
-
-      - name: Install buildozer & p4a
+      - name: Install buildozer from master
         run: |
           pip install --upgrade pip
-          pip install "cython<3.0" buildozer
-          pip install "python-for-android==2024.1.21"
+          pip install "cython<3.0"
+          pip install git+https://github.com/kivy/buildozer.git@master
+          pip install git+https://github.com/kivy/python-for-android.git@develop
 
       - name: Cache buildozer
         uses: actions/cache@v4
@@ -46,14 +42,11 @@ jobs:
             ~/.buildozer
             .buildozer
             ~/.cache/pip
-          key: buildozer-${{ hashFiles('buildozer.spec') }}
+          key: buildozer-v2-${{ hashFiles('buildozer.spec') }}
           restore-keys: |
-            buildozer-
+            buildozer-v2-
 
       - name: Build with Buildozer
-        env:
-          # إجبار استخدام Python 3.11
-          PYTHON: /opt/hostedtoolcache/Python/3.11.9/x64/bin/python3
         run: |
           yes | buildozer -v android debug
 
