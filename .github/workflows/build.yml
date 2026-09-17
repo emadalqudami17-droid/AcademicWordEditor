@@ -28,23 +28,21 @@ jobs:
             libtinfo6 cmake libffi-dev libssl-dev \
             ccache
 
-      - name: Install buildozer from master
+      - name: Fix pip for p4a compatibility
         run: |
-          pip install --upgrade pip
-          pip install "cython<3.0"
-          pip install git+https://github.com/kivy/buildozer.git@master
-          pip install git+https://github.com/kivy/python-for-android.git@develop
+          # حل مشكلة open_rich_spinner
+          pip install --upgrade "pip<24.1" "setuptools<70" "wheel"
+          python -m pip --version
 
-      - name: Cache buildozer
-        uses: actions/cache@v4
-        with:
-          path: |
-            ~/.buildozer
-            .buildozer
-            ~/.cache/pip
-          key: buildozer-v2-${{ hashFiles('buildozer.spec') }}
-          restore-keys: |
-            buildozer-v2-
+      - name: Install buildozer
+        run: |
+          pip install "cython<3.0"
+          pip install "buildozer==1.5.0"
+          pip install "python-for-android==2024.1.21"
+
+      - name: Clear stale cache
+        run: |
+          rm -rf ~/.buildozer .buildozer 2>/dev/null || true
 
       - name: Build with Buildozer
         run: |
